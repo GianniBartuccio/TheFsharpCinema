@@ -1,7 +1,10 @@
 namespace TheFsharpCinemaDomain.Domain
 
-type CinemaName = string
+type CinemaName = CinemaName of string
 
-type Cinema = { Id : CinemaName
-                CinemaShows : CinemaShow list }
+type Cinema =
+    {
+        Id: CinemaName
+        CinemaShows: CinemaShow list
+    }
 
