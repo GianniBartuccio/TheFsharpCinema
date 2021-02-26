@@ -8,11 +8,16 @@ type CinemaShowAvailableSeatRetriever =
     }
 
 module CinemaShowAvailableSeatRetriever =
-    let create getShow cinemaShowId =
-        let cinemaShow = getShow cinemaShowId
+    let create getShow =
+        let getAvailableSeats cinemaShowId =
+            let cinemaShow = getShow cinemaShowId
 
-        match cinemaShow with
-        | Some show ->
-            show.SeatingPlan
-            |> SeatingPlan.getAvailableSeats
-        | None -> List.empty
+            match cinemaShow with
+            | Some show ->
+                show.SeatingPlan
+                |> SeatingPlan.getAvailableSeats
+            | None -> List.empty
+
+        {
+            GetAvailableSeats = getAvailableSeats
+        }
