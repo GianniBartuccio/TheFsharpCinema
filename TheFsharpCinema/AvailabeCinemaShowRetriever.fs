@@ -1,8 +1,8 @@
-module AvailableCinemaShowRetriever
+namespace TheFsharpCinemaDomain.Service
 
-    open TheFsharpCinemaDomain.Domain
+open TheFsharpCinemaDomain.Domain
+
+module AvailableCinemaShowRetriever =
     let getAvailableShows cinema =
         cinema.CinemaShows
-        |> List.filter (fun cinemaShow -> cinemaShow.SeatingPlan.GetAvailableSeats.Length > 0)
-        
-        
+        |> List.where CinemaShow.hasAvailableSeats

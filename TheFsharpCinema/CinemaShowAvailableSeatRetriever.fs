@@ -1,9 +1,23 @@
-module TheFsharpCinemaDomain.CinemaShowAvailableSeatRetriever
+namespace TheFsharpCinemaDomain.Service
 
-    open TheFsharpCinemaDomain.Domain
-    
-    let GetAvailableSeats (getShowFromPersistence : CinemaShowId -> CinemaShow option) cinemaShowId =
-        let cinemaShow = getShowFromPersistence cinemaShowId
-        match cinemaShow with
-        | Some show -> show.SeatingPlan.GetAvailableSeats
-        | None -> List.empty
+open TheFsharpCinemaDomain.Domain
+
+type CinemaShowAvailableSeatRetriever =
+    {
+        GetAvailableSeats: CinemaShowId -> Seat list
+    }
+
+module CinemaShowAvailableSeatRetriever =
+    let create getShow =
+        let getAvailableSeats cinemaShowId =
+            let cinemaShow = getShow cinemaShowId
+
+            match cinemaShow with
+            | Some show ->
+                show.SeatingPlan
+                |> SeatingPlan.getAvailableSeats
+            | None -> List.empty
+
+        {
+            GetAvailableSeats = getAvailableSeats
+        }
